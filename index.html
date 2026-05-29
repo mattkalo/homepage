@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蔡承恩 | 個人品牌與作品集</title>
+    <style>
+        /* ==============================
+           CSS 變數與全域設定 (深色模式與科技感)
+           ============================== */
+        :root {
+            /* 科技感色調 */
+            --primary-color: #00d1ff;
+            /* 科技感亮藍 */
+            --primary-dark: #0099cc;
+            --text-dark: #e0e6ed;
+            /* 亮文字 */
+            --text-light: #b0b7c3;
+            /* 淺灰色 */
+
+            /* 深色背景 */
+            --bg-dark: #0f172a;
+            /* 深藍黑背景 */
+            --card-bg: #1e293b;
+            /* 卡片背景 */
+
+            /* 科技感細節 */
+            --border-color: rgba(0, 209, 255, 0.2);
+            /* 輕微科技藍邊框 */
+            --glow: 0 0 10px rgba(0, 209, 255, 0.5);
+            /* 亮藍發光 */
+
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-dark);
+            /* 深色背景 */
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            /* 避免固定寬度 */
+            width: 100%;
+        }
+
+        /* ==============================
+           Hero 區塊 (科技感 Banner)
+           ============================== */
+        .hero {
+            position: relative;
+            height: 40vh;
+            min-height: 300px;
+            background: url('banner.jpg') center/cover no-repeat;
+            background-color: #000;
+            /* 圖片失效時的備用背景色 */
+        }
+
+        /* 科技感漸變疊加層 */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* 從亮藍到深色背景的漸變，增加科技感 */
+            background: linear-gradient(135deg, rgba(0, 209, 255, 0.1) 0%, rgba(15, 23, 42, 0.9) 100%);
+        }
+
+        /* 頭像與簡介 (浮動在 Hero 上方) */
+        .profile-header {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            margin-top: -100px;
+            padding-bottom: 2rem;
+        }
+
+        .avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            /* 科技感亮白邊框，增加立體感 */
+            border: 8px solid rgba(255, 255, 255, 0.1);
+            object-fit: cover;
+            background-color: #111;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            /* 輕微科技發光 */
+            filter: drop-shadow(0 0 5px rgba(0, 209, 255, 0.3));
+        }
+
+        .name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 1rem 0 0.5rem;
+            color: #fff;
+            /* 名字保持亮白 */
+        }
+
+        .headline {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        /* ==============================
+           通用段落設定
+           ============================== */
+        section {
+            padding: 5rem 0;
+            /* 增加間距 */
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 3rem;
+            position: relative;
+            color: #fff;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary-color);
+            margin: 10px auto 0;
+            border-radius: 2px;
+            box-shadow: var(--glow);
+        }
+
+        /* ==============================
+           關於我
+           ============================== */
+        #about {
+            background-color: var(--bg-dark);
+            /* 使用背景色 */
+        }
+
+        .about-text {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+
+        /* ==============================
+           技能列表
+           ============================== */
+        #skills {
+            background-color: var(--card-bg);
+            /* 使用卡片背景色 */
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .skill-tag {
+            background-color: var(--card-bg);
+            /* 深色卡片背景 */
+            color: var(--text-dark);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            /* 科技感細節：輕微邊框與發光 */
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0, 209, 255, 0.15);
+            transition: var(--transition);
+        }
+
+        .skill-tag:hover {
+            background-color: var(--primary-color);
+            color: #000;
+            /* 懸停時文字變黑，增加對比 */
+            transform: translateY(-2px);
+            box-shadow: var(--glow);
+        }
+
+        /* ==============================
+           作品集 (三欄卡片佈局)
+           ============================== */
+        #portfolio {
+            background-color: var(--bg-dark);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            /* 顯式設置在大屏幕上為三欄 */
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .portfolio-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            /* 科技感細節：細邊框與懸停發光 */
+            border: 1px solid var(--border-color);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-8px);
+            /* 懸停時邊框變亮且發光 */
+            border-color: var(--primary-color);
+            box-shadow: var(--glow);
+        }
+
+        .portfolio-content {
+            padding: 25px;
+        }
+
+        .portfolio-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .portfolio-desc {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        /* ==============================
+           聯絡方式 (按鈕形式)
+           ============================== */
+        #contact {
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 209, 255, 0.1);
+        }
+
+        .btn:hover {
+            box-shadow: var(--glow);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: #000;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #fff;
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            /* 科技感亮藍邊框 */
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 5px rgba(0, 209, 255, 0.1);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+        /* ==============================
+           頁尾
+           ============================== */
+        footer {
+            background-color: #080a10;
+            /* 更深的深色背景 */
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem 0;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* ==============================
+           響應式設計 (優化手機與平板)
+           ============================== */
+
+        /* 1. 平板 (作品集改為二欄) */
+        @media (max-width: 992px) {
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* 2. 手機 (全面優化，避免固定寬度造成畫面超出) */
+        @media (max-width: 768px) {
+
+            /* 避免固定寬度 */
+            .container {
+                padding: 0 15px;
+            }
+
+            .hero {
+                height: 30vh;
+            }
+
+            .avatar {
+                width: 150px;
+                height: 150px;
+                border-width: 5px;
+            }
+
+            .name {
+                font-size: 2rem;
+            }
+
+            .headline {
+                font-size: 1rem;
+                padding: 0 10px;
+            }
+
+            section {
+                padding: 3rem 0;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+            }
+
+            .about-text {
+                font-size: 1rem;
+            }
+
+            /* 作品集改為一欄 */
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .portfolio-content {
+                padding: 20px;
+            }
+
+            /* 按鈕調整 */
+            .btn {
+                width: 100%;
+                /* 手機版按鈕撐滿 */
+                justify-content: center;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="hero"></div>
+
+    <div class="profile-header container">
+        <img src="avatar.jpg" alt="個人頭像" class="avatar">
+        <h1 class="name">蔡承恩</h1>
+        <p class="headline">研究生 / 計算電磁學與矽光子技術</p>
+    </div>
+
+    <section id="about" class="container">
+        <h2 class="section-title">關於我</h2>
+        <p class="about-text">
+            你好！我是蔡承恩。我目前是一名研究等角螺旋奈米天線的研究生。在龐大的數據與 COMSOL 模擬之外，我喜歡踏實安穩的生活步調。我期許自己能持續在計算電磁學領域中鑽研，將這份專注與毅力應用在每一次的研究挑戰中。
+        </p>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">專業技能</h2>
+            <div class="skills-container">
+                <span class="skill-tag">COMSOL Multiphysics</span>
+                <span class="skill-tag">MATLAB</span>
+                <span class="skill-tag">Python (LineBot 開發)</span>
+                <span class="skill-tag">天線設計 (iPAS初級工程師)</span>
+                <span class="skill-tag">前端網頁設計</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="container">
+        <h2 class="section-title">近期作品集</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-card">
+                <div class="portfolio-content">
+                    <h3 class="portfolio-title">等角螺旋奈米天線研究</h3>
+                    <p class="portfolio-desc">
+                        碩士論文核心專案。使用 COMSOL 進行頻域模擬，並結合 MATLAB 自動化處理數據與繪圖，優化奈米天線的幾何參數與電磁特性。
+                    </p>
+                </div>
+            </div>
+            <div class="portfolio-card">
+                <div class="portfolio-content">
+                    <h3 class="portfolio-title">智慧 LineBot 助理</h3>
+                    <p class="portfolio-desc">
+                        使用 Python 開發的 Line 機器人，整合 OpenAI API 進行自然語言對話，並實作了群組訊息計數器與自定義人設功能。
+                    </p>
+                </div>
+            </div>
+            <div class="portfolio-card">
+                <div class="portfolio-content">
+                    <h3 class="portfolio-title">網站設計</h3>
+                    <p class="portfolio-desc">
+                        不依賴任何前端框架，使用純 HTML、CSS 與 JavaScript 打造個人網站。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">與我聯絡</h2>
+            <div class="action-buttons">
+                <a href="javascript:void(0)" onclick="copyEmail('a36325960@gmail.com')" class="btn btn-primary">✉️
+                    複製我的信箱</a>
+                <a href="https://github.com/mattkalo" target="_blank" class="btn btn-outline">GitHub</a>
+                <a href="https://linkedin.com/in/夜-流-3b24b0346" target="_blank" class="btn btn-outline">LinkedIn</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> 蔡承恩. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 1. 動態更新頁尾年份
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // 2. 增加簡單的滾動淡入動畫效果 (Intersection Observer)
+        // 為了科技感，讓動畫更銳利
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // 初始化動畫樣式並套用觀察器
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)'; /* 稍微增加移動距離 */
+            section.style.transition = 'opacity 0.7s ease-out, transform 0.7s ease-out';
+            observer.observe(section);
+        });
+        // 3. 一鍵複製信箱功能
+        function copyEmail(emailAddress) {
+            // 使用現代的 Clipboard API 來複製文字
+            navigator.clipboard.writeText(emailAddress).then(function () {
+                // 複製成功時跳出提示
+                alert('信箱已成功複製：' + emailAddress + '\n期待收到你的來信！');
+            }).catch(function (err) {
+                // 如果瀏覽器阻擋，跳出備用提示
+                alert('自動複製失敗，請手動複製此信箱：\n' + emailAddress);
+            });
+        }
+    </script>
+</body>
+
+</html>
