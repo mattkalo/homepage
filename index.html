@@ -3,390 +3,551 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REmod SaaS Presentation</title>
-    
-    <!-- Tailwind CSS -->
+    <title>Clashtest SaaS Presentation</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
     <style>
-        /* 自訂動畫與樣式 */
         @keyframes spin-slow {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
+
         .animate-spin-slow {
             animation: spin-slow 3s linear infinite;
         }
+
         .fade-in {
             animation: fadeIn 0.5s ease-in-out;
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { 
+                opacity: 0; 
+                transform: translateY(10px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
         }
-        /* 隱藏元素用的工具類 */
+
         .hidden-state {
             display: none !important;
         }
     </style>
 </head>
+
 <body class="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-cyan-900">
 
-    <!-- 頂部導覽與計時列 -->
-    <header class="bg-slate-900 border-b border-slate-800 p-4 sticky top-0 z-10 flex justify-between items-center shadow-md">
-        <div class="flex items-center space-x-3">
-            <i data-lucide="database" class="w-8 h-8 text-cyan-400"></i>
-            <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
-                REmod <span class="text-sm text-slate-400 font-normal ml-2">Cloud Asset SaaS</span>
-            </h1>
-        </div>
-        
-        <!-- 報告控制台 -->
-        <div class="flex items-center space-x-4 bg-slate-950 px-4 py-2 rounded-full border border-slate-800">
-            <i data-lucide="clock" id="timerIcon" class="w-5 h-5 text-slate-400"></i>
-            <span id="timerDisplay" class="text-xl font-mono font-bold text-cyan-400">05:00</span>
-            <div class="h-6 w-px bg-slate-800 mx-2"></div>
-            <button id="toggleTimerBtn" class="text-slate-400 hover:text-white transition" onclick="toggleTimer()">
-                <i data-lucide="play" id="playPauseIcon" class="w-5 h-5"></i>
-            </button>
-            <button id="btn5m" class="text-xs px-2 py-1 rounded bg-cyan-900 text-cyan-100" onclick="resetTimer(5)">5m</button>
-            <button id="btn10m" class="text-xs px-2 py-1 rounded bg-slate-800 text-slate-400" onclick="resetTimer(10)">10m</button>
-        </div>
-    </header>
-
-    <div class="flex flex-col md:flex-row max-w-7xl mx-auto mt-6 px-4 gap-6">
-        
-        <!-- 左側選單 -->
-        <aside class="w-full md:w-64 shrink-0 flex flex-col space-y-2">
-            <button id="tabPitch" onclick="switchTab('pitch')" class="flex items-center space-x-3 w-full p-4 rounded-xl text-left transition-all duration-300 bg-gradient-to-r from-cyan-900/50 to-blue-900/50 border border-cyan-700/50 text-white shadow-[0_0_15px_rgba(34,211,238,0.1)]">
-                <i data-lucide="trending-up" class="w-5 h-5"></i>
-                <span class="font-semibold">SaaS 商業概念展示</span>
-            </button>
-            <button id="tabDemo" onclick="switchTab('demo')" class="flex items-center space-x-3 w-full p-4 rounded-xl text-left transition-all duration-300 bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-slate-200">
-                <i data-lucide="zap" class="w-5 h-5"></i>
-                <span class="font-semibold">Clashtest系統動態演示</span>
-            </button>
-        </aside>
-
-        <!-- 右側內容區 -->
-        <main class="flex-1 bg-slate-900 rounded-2xl border border-slate-800 p-6 shadow-2xl min-h-[600px] overflow-hidden">
-            
-            <!-- ==================== Pitch Deck 視圖 ==================== -->
-            <div id="viewPitch" class="space-y-6 fade-in">
-                <h2 class="text-3xl font-bold border-b border-slate-700 pb-4 mb-6">執行摘要 <span class="text-lg text-slate-500 font-normal ml-2">Executive Summary</span></h2>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 hover:border-cyan-500/30 transition">
-                        <div class="flex items-center space-x-3 mb-3">
-                            <i data-lucide="shield-check" class="w-6 h-6 text-cyan-400"></i>
-                            <h3 class="text-xl font-bold text-white">主題 (Theme)</h3>
-                        </div>
-                        <p class="text-slate-300 text-sm leading-relaxed">
-                            面向 C 端高階使用者的 <strong class="text-cyan-400">Micro-SaaS 平台</strong>。將高度依賴終端設備算力的除錯工作，轉移到 <strong class="text-cyan-400">雲端運算 (Cloud-native computing)</strong>，提供即時的相依性分析與自動修復服務。
-                        </p>
-                    </div>
-
-                    <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 hover:border-blue-500/30 transition">
-                        <div class="flex items-center space-x-3 mb-3">
-                            <i data-lucide="upload-cloud" class="w-6 h-6 text-blue-400"></i>
-                            <h3 class="text-xl font-bold text-white">目的 (Purpose)</h3>
-                        </div>
-                        <p class="text-slate-300 text-sm leading-relaxed mb-2">
-                            <span class="text-slate-500 block mb-1">痛點：環境配置複雜與本地除錯成本過高。</span>
-                        </p>
-                        <p class="text-slate-300 text-sm leading-relaxed">
-                            解決方案：透過網頁端一鍵接入，免安裝本地軟體。將技術門檻轉化為 SaaS 服務，實現 <strong class="text-blue-400">「開箱即用 (Out-of-the-box)」</strong> 的無縫體驗。
-                        </p>
-                    </div>
-
-                    <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 col-span-1 lg:col-span-2 hover:border-indigo-500/30 transition">
-                        <div class="flex items-center space-x-3 mb-3">
-                            <i data-lucide="cpu" class="w-6 h-6 text-indigo-400"></i>
-                            <h3 class="text-xl font-bold text-white">核心微服務架構 (Core Features)</h3>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                            <div class="bg-slate-900 p-4 rounded-lg border border-slate-800">
-                                <h4 class="font-bold text-indigo-300 mb-2">1. 雲端輕量化分析 (Cloud Static Analysis)</h4>
-                                <p class="text-slate-400 text-xs leading-relaxed">透過 Python 構建的後端資料管線 (Data Pipeline)，使用者僅需上傳 KB 級設定檔，雲端即速比對衝突特徵庫 (精準定位骨骼或腳本覆寫異常)。</p>
-                            </div>
-                            <div class="bg-slate-900 p-4 rounded-lg border border-slate-800">
-                                <h4 class="font-bold text-purple-300 mb-2">2. AI 驅動自動修復 (API-Driven Remediation)</h4>
-                                <p class="text-slate-400 text-xs leading-relaxed">接收衝突日誌後，系統自動化調用 OpenAI API，大語言模型即時生成修復腳本，達成無人工介入的自動化除錯流。</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 hover:border-emerald-500/30 transition">
-                        <div class="flex items-center space-x-3 mb-3">
-                            <i data-lucide="trending-up" class="w-6 h-6 text-emerald-400"></i>
-                            <h3 class="text-xl font-bold text-white">商業模式 (Business Model)</h3>
-                        </div>
-                        <ul class="text-slate-300 text-sm space-y-3">
-                            <li class="flex items-start"><span class="text-emerald-500 mr-2">▪</span><span><strong>免費漏斗：</strong>每月限 3 次基礎分析 (無 AI 生成)，控制伺服器成本並降低獲客成本 (CAC)。</span></li>
-                            <li class="flex items-start"><span class="text-emerald-500 mr-2">▪</span><span><strong>訂閱制 ($5 USD/月)：</strong>無限制 OpenAI API 修復與專屬雲端備份。</span></li>
-                            <li class="flex items-start"><span class="text-emerald-500 mr-2">▪</span><span><strong>核心指標：</strong>維持高續訂率，打造穩定的 <strong class="text-emerald-400">MRR (每月經常性收入)</strong>。</span></li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 hover:border-rose-500/30 transition">
-                        <div class="flex items-center space-x-3 mb-3">
-                            <i data-lucide="rocket" class="w-6 h-6 text-rose-400"></i>
-                            <h3 class="text-xl font-bold text-white">未來展望 (Vision & Scalability)</h3>
-                        </div>
-                        <ul class="text-slate-300 text-sm space-y-3">
-                            <li class="flex items-start"><span class="text-rose-500 mr-2">▪</span><span><strong>創作者 CI/CD 沙盒 (B2B)：</strong>供開發者發布前進行全資料庫相容性壓力測試，確保模組品質並降低客服壓力。</span></li>
-                            <li class="flex items-start"><span class="text-rose-500 mr-2">▪</span><span><strong>AI 語境在地化管線：</strong>一鍵翻譯數十萬字的外文劇情模組，保留角色設定 (Persona)，打破語言壁壘。</span></li>
-                            <li class="flex items-start"><span class="text-rose-500 mr-2">▪</span><span><strong>橫向生態移植：</strong>核心資料架構未來可無縫平行移植至其他開源遊戲或軟體生態。</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ==================== Live Demo 視圖 ==================== -->
-            <div id="viewDemo" class="space-y-6 hidden-state h-full flex flex-col">
-                <div class="flex justify-between items-center border-b border-slate-700 pb-4 mb-2">
-                    <h2 class="text-3xl font-bold text-white flex items-center gap-3">
-                        <i data-lucide="code" class="text-emerald-400"></i> 系統動態演示 
-                        <span class="text-xs bg-emerald-900/50 text-emerald-400 px-2 py-1 rounded border border-emerald-800">Live POC</span>
-                    </h2>
-                    <button onclick="resetDemoState()" class="text-slate-400 text-sm hover:text-white underline">重置沙盒</button>
-                </div>
-
-                <!-- 互動演示區 -->
-                <div class="flex-1 border-2 border-dashed border-slate-700 rounded-2xl bg-slate-950/50 p-8 flex flex-col items-center justify-center relative overflow-hidden min-h-[400px]">
-                    
-                    <!-- 狀態 1: Idle -->
-                    <div id="demoStateIdle" class="text-center space-y-6 fade-in">
-                        <div class="w-24 h-24 bg-slate-900 rounded-full flex items-center justify-center mx-auto border border-slate-800 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
-                            <i data-lucide="upload-cloud" class="w-12 h-12 text-slate-400"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-white mb-2">上傳設定檔以啟動雲端沙盒</h3>
-                            <p class="text-slate-500 text-sm">支援格式: loadorder.txt, plugins.txt (最大限制 500KB)</p>
-                        </div>
-                        <button onclick="startAnalysis()" class="bg-cyan-600 hover:bg-cyan-500 text-white px-8 py-3 rounded-full font-bold transition-all shadow-[0_0_20px_rgba(8,145,178,0.4)]">
-                            模擬上傳並分析
-                        </button>
-                    </div>
-
-                    <!-- 狀態 2 & 4: Analyzing / Patching -->
-                    <div id="demoStateLoading" class="w-full max-w-md text-center space-y-6 hidden-state fade-in">
-                        <i data-lucide="cpu" id="loadingIcon" class="w-16 h-16 mx-auto text-cyan-400 animate-spin-slow"></i>
-                        <h3 id="loadingTitle" class="text-xl font-bold text-white">正在雲端沙盒建立靜態比對...</h3>
-                        <div class="w-full bg-slate-900 rounded-full h-3 border border-slate-800 overflow-hidden">
-                            <div id="loadingBar" class="h-3 rounded-full transition-all duration-300 ease-out bg-cyan-500" style="width: 0%;"></div>
-                        </div>
-                        <p id="loadingText" class="text-slate-500 font-mono text-sm">Analyzing mesh dependencies... 0%</p>
-                    </div>
-
-                    <!-- 狀態 3: Conflict -->
-                    <div id="demoStateConflict" class="w-full max-w-2xl bg-slate-900 border border-red-900/50 rounded-xl overflow-hidden shadow-2xl hidden-state fade-in">
-                        <div class="bg-red-950/50 border-b border-red-900/50 p-4 flex items-center space-x-3">
-                            <i data-lucide="alert-triangle" class="w-6 h-6 text-red-500"></i>
-                            <h3 class="text-lg font-bold text-red-400">偵測到致命級別相依性衝突 (Fatal Conflict Detected)</h3>
-                        </div>
-                        <div class="p-6 space-y-4">
-                            <div class="grid grid-cols-3 gap-4 text-sm">
-                                <div class="col-span-1 text-slate-400 font-mono">衝突節點 A:</div>
-                                <div class="col-span-2 text-white font-mono bg-slate-950 p-2 rounded">XPMSSE.esp (Skeleton Ext.)</div>
-                                <div class="col-span-1 text-slate-400 font-mono">衝突節點 B:</div>
-                                <div class="col-span-2 text-white font-mono bg-slate-950 p-2 rounded">SeranaDialogAddon.esp (Script)</div>
-                                <div class="col-span-1 text-slate-400 font-mono">錯誤類型:</div>
-                                <div class="col-span-2 text-red-400 font-mono bg-red-950/30 p-2 rounded border border-red-900/50">Node Override Exception [0x00A1]</div>
-                            </div>
-                            <div class="pt-4 border-t border-slate-800 flex justify-end space-x-4">
-                                <button class="px-4 py-2 text-slate-400 hover:text-white transition">忽略</button>
-                                <button onclick="startPatching()" class="bg-purple-600 hover:bg-purple-500 text-white px-6 py-2 rounded-lg font-bold flex items-center space-x-2 transition shadow-[0_0_15px_rgba(147,51,234,0.4)]">
-                                    <i data-lucide="zap" class="w-4 h-4"></i>
-                                    <span>啟動 AI 一鍵修復</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 狀態 5: Success -->
-                    <div id="demoStateSuccess" class="w-full max-w-2xl bg-slate-900 border border-emerald-900/50 rounded-xl overflow-hidden shadow-2xl hidden-state fade-in">
-                        <div class="bg-emerald-950/50 border-b border-emerald-900/50 p-4 flex items-center space-x-3">
-                            <i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-500"></i>
-                            <h3 class="text-lg font-bold text-emerald-400">動態補丁生成完畢 (AI Patch Generated)</h3>
-                        </div>
-                        <div class="p-6 space-y-4">
-                            <p class="text-slate-300 text-sm leading-relaxed">
-                                系統已透過 LLM 模型重新排列 Load Order，並動態編譯了一個相容性補丁檔案。您的環境評分已從 <span class="text-red-400 font-bold">F</span> 提升至 <span class="text-emerald-400 font-bold">A+</span>。
-                            </p>
-                            <div class="bg-slate-950 border border-slate-800 p-4 rounded-lg font-mono text-xs text-emerald-300/70 overflow-x-auto whitespace-pre"><code>// Auto-generated by ModNexus AI Core
-{
-  "operation": "inject_node_bypass",
-  "target": "XPMSSE.esp",
-  "priority": "high",
-  "script_override": "if (actor.hasKeyword(SDA_Keyword)) { return false; }"
-}</code></div>
-                            <div class="pt-4 flex justify-center">
-                                <button class="bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-3 rounded-full font-bold flex items-center space-x-2 transition shadow-[0_0_20px_rgba(16,185,129,0.4)]">
-                                    <i data-lucide="download" class="w-5 h-5"></i>
-                                    <span>下載 ModNexus_Patch.zip</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </main>
+<header class="bg-slate-900 border-b border-slate-800 p-4 sticky top-0 z-10 flex justify-between items-center shadow-md">
+    <div class="flex items-center space-x-3">
+        <i data-lucide="database" class="w-8 h-8 text-cyan-400"></i>
+        <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
+            Clashtest 
+            <span class="text-sm text-slate-400 font-normal ml-2">Mod Conflict SaaS</span>
+        </h1>
     </div>
 
-    <script>
-        // 初始化 Lucide 圖示
+    <div class="flex items-center space-x-4 bg-slate-950 px-4 py-2 rounded-full border border-slate-800">
+        <i data-lucide="clock" id="timerIcon" class="w-5 h-5 text-slate-400"></i>
+        <span id="timerDisplay" class="text-xl font-mono font-bold text-cyan-400">05:00</span>
+
+        <div class="h-6 w-px bg-slate-800 mx-2"></div>
+
+        <button id="toggleTimerBtn" class="text-slate-400 hover:text-white transition" onclick="toggleTimer()">
+            <i data-lucide="play" id="playPauseIcon" class="w-5 h-5"></i>
+        </button>
+
+        <button id="btn5m" class="text-xs px-2 py-1 rounded bg-cyan-900 text-cyan-100" onclick="resetTimer(5)">
+            5m
+        </button>
+
+        <button id="btn10m" class="text-xs px-2 py-1 rounded bg-slate-800 text-slate-400" onclick="resetTimer(10)">
+            10m
+        </button>
+    </div>
+</header>
+
+<div class="flex flex-col md:flex-row max-w-7xl mx-auto mt-6 px-4 gap-6">
+
+    <aside class="w-full md:w-64 shrink-0 flex flex-col space-y-2">
+        <button 
+            id="tabPitch" 
+            onclick="switchTab('pitch')" 
+            class="flex items-center space-x-3 w-full p-4 rounded-xl text-left transition-all duration-300 bg-gradient-to-r from-cyan-900/50 to-blue-900/50 border border-cyan-700/50 text-white"
+        >
+            <i data-lucide="trending-up" class="w-5 h-5"></i>
+            <span class="font-semibold">SaaS 商業概念展示</span>
+        </button>
+
+        <button 
+            id="tabDemo" 
+            onclick="switchTab('demo')" 
+            class="flex items-center space-x-3 w-full p-4 rounded-xl text-left transition-all duration-300 bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+        >
+            <i data-lucide="zap" class="w-5 h-5"></i>
+            <span class="font-semibold">Clashtest 系統動態演示</span>
+        </button>
+    </aside>
+
+    <main class="flex-1 bg-slate-900 rounded-2xl border border-slate-800 p-6 shadow-2xl min-h-[600px] overflow-hidden">
+
+        <div id="viewPitch" class="space-y-6 fade-in">
+            <h2 class="text-3xl font-bold border-b border-slate-700 pb-4 mb-6">
+                執行摘要 
+                <span class="text-lg text-slate-500 font-normal ml-2">Executive Summary</span>
+            </h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 hover:border-cyan-500/30 transition">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <i data-lucide="shield-check" class="w-6 h-6 text-cyan-400"></i>
+                        <h3 class="text-xl font-bold text-white">主題 Theme</h3>
+                    </div>
+
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Clashtest 是面向遊戲模組玩家與模組創作者的 
+                        <strong class="text-cyan-400">Micro-SaaS 平台</strong>。
+                        使用者上傳 loadorder.txt 或 plugins.txt 後，系統會偵測模組衝突類型、風險等級、排序問題與相依性異常。
+                    </p>
+                </div>
+
+                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 hover:border-blue-500/30 transition">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <i data-lucide="upload-cloud" class="w-6 h-6 text-blue-400"></i>
+                        <h3 class="text-xl font-bold text-white">目的 Purpose</h3>
+                    </div>
+
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        解決模組安裝後常見的閃退、覆寫、排序錯誤與相依性衝突。
+                        平台不生成 AI 補丁，而是輸出
+                        <strong class="text-blue-400">衝突分析報告、風險分級與 Load Order 建議</strong>。
+                    </p>
+                </div>
+
+                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 col-span-1 lg:col-span-2 hover:border-indigo-500/30 transition">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <i data-lucide="cpu" class="w-6 h-6 text-indigo-400"></i>
+                        <h3 class="text-xl font-bold text-white">核心微服務架構 Core Features</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div class="bg-slate-900 p-4 rounded-lg border border-slate-800">
+                            <h4 class="font-bold text-indigo-300 mb-2">1. 雲端輕量化分析</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                上傳 KB 級設定檔後，系統分析模組排序、相依性、覆寫關係與風險分布。
+                                使用者不需要在本機安裝額外工具。
+                            </p>
+                        </div>
+
+                        <div class="bg-slate-900 p-4 rounded-lg border border-slate-800">
+                            <h4 class="font-bold text-rose-300 mb-2">2. 衝突模組類型偵測</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                偵測 Skeleton Conflict、Script Override、Dialogue Conflict、Asset Conflict 
+                                與 Load Order Conflict，並輸出建議處理方向。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 hover:border-emerald-500/30 transition">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <i data-lucide="trending-up" class="w-6 h-6 text-emerald-400"></i>
+                        <h3 class="text-xl font-bold text-white">商業模式 Business Model</h3>
+                    </div>
+
+                    <ul class="text-slate-300 text-sm space-y-3">
+                        <li>
+                            <span class="text-emerald-500 mr-2">▪</span>
+                            <strong>免費版：</strong>每月 3 次基礎衝突分析。
+                        </li>
+
+                        <li>
+                            <span class="text-emerald-500 mr-2">▪</span>
+                            <strong>進階版：</strong>完整衝突報告、風險分級、Load Order 建議。
+                        </li>
+
+                        <li>
+                            <span class="text-emerald-500 mr-2">▪</span>
+                            <strong>專業版：</strong>提供歷史紀錄、雲端備份、模組組合比較。
+                        </li>
+
+                        <li>
+                            <span class="text-emerald-500 mr-2">▪</span>
+                            <strong>B2B 服務：</strong>模組作者發布前相容性檢查。
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 hover:border-rose-500/30 transition">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <i data-lucide="rocket" class="w-6 h-6 text-rose-400"></i>
+                        <h3 class="text-xl font-bold text-white">未來展望 Vision</h3>
+                    </div>
+
+                    <ul class="text-slate-300 text-sm space-y-3">
+                        <li>
+                            <span class="text-rose-500 mr-2">▪</span>
+                            建立大型模組衝突資料庫。
+                        </li>
+
+                        <li>
+                            <span class="text-rose-500 mr-2">▪</span>
+                            支援多遊戲模組生態。
+                        </li>
+
+                        <li>
+                            <span class="text-rose-500 mr-2">▪</span>
+                            提供創作者相容性檢查 API。
+                        </li>
+
+                        <li>
+                            <span class="text-rose-500 mr-2">▪</span>
+                            導入模組風險評分與安裝前預測。
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="viewDemo" class="space-y-6 hidden-state h-full flex flex-col">
+
+            <div class="flex justify-between items-center border-b border-slate-700 pb-4 mb-2">
+                <h2 class="text-3xl font-bold text-white flex items-center gap-3">
+                    <i data-lucide="code" class="text-emerald-400"></i>
+                    系統動態演示
+                    <span class="text-xs bg-emerald-900/50 text-emerald-400 px-2 py-1 rounded border border-emerald-800">
+                        Live POC
+                    </span>
+                </h2>
+
+                <button onclick="resetDemoState()" class="text-slate-400 text-sm hover:text-white underline">
+                    重置沙盒
+                </button>
+            </div>
+
+            <div class="flex-1 border-2 border-dashed border-slate-700 rounded-2xl bg-slate-950/50 p-8 flex flex-col items-center justify-center relative overflow-hidden min-h-[430px]">
+
+                <div id="demoStateIdle" class="text-center space-y-6 fade-in">
+                    <div class="w-24 h-24 bg-slate-900 rounded-full flex items-center justify-center mx-auto border border-slate-800 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+                        <i data-lucide="upload-cloud" class="w-12 h-12 text-slate-400"></i>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">
+                            上傳 plugins.txt 啟動雲端分析
+                        </h3>
+
+                        <p class="text-slate-500 text-sm">
+                            模擬檔案：128 mods / 42.6 KB
+                        </p>
+                    </div>
+
+                    <button onclick="startAnalysis()" class="bg-cyan-600 hover:bg-cyan-500 text-white px-8 py-3 rounded-full font-bold transition-all shadow-[0_0_20px_rgba(8,145,178,0.4)]">
+                        開始衝突分析
+                    </button>
+                </div>
+
+                <div id="demoStateLoading" class="w-full max-w-md text-center space-y-6 hidden-state fade-in">
+                    <i data-lucide="cpu" id="loadingIcon" class="w-16 h-16 mx-auto text-cyan-400 animate-spin-slow"></i>
+
+                    <h3 id="loadingTitle" class="text-xl font-bold text-white">
+                        正在讀取 Load Order...
+                    </h3>
+
+                    <div class="w-full bg-slate-900 rounded-full h-3 border border-slate-800 overflow-hidden">
+                        <div id="loadingBar" class="h-3 rounded-full transition-all duration-300 ease-out bg-cyan-500" style="width: 0%;"></div>
+                    </div>
+
+                    <p id="loadingText" class="text-slate-500 font-mono text-sm">
+                        Loading plugins.txt... 0%
+                    </p>
+                </div>
+
+                <div id="demoStateResult" class="w-full max-w-3xl bg-slate-900 border border-cyan-900/50 rounded-xl overflow-hidden shadow-2xl hidden-state fade-in">
+
+                    <div class="bg-cyan-950/50 border-b border-cyan-900/50 p-4 flex items-center space-x-3">
+                        <i data-lucide="scan-search" class="w-6 h-6 text-cyan-400"></i>
+                        <h3 class="text-lg font-bold text-cyan-300">
+                            衝突模組類型偵測完成
+                        </h3>
+                    </div>
+
+                    <div class="p-6 space-y-5">
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-slate-950 p-4 rounded-lg border border-red-900/50">
+                                <p class="text-slate-500 text-xs mb-1">高風險</p>
+                                <p class="text-2xl font-bold text-red-400">1</p>
+                            </div>
+
+                            <div class="bg-slate-950 p-4 rounded-lg border border-yellow-900/50">
+                                <p class="text-slate-500 text-xs mb-1">中風險</p>
+                                <p class="text-2xl font-bold text-yellow-400">2</p>
+                            </div>
+
+                            <div class="bg-slate-950 p-4 rounded-lg border border-emerald-900/50">
+                                <p class="text-slate-500 text-xs mb-1">低風險</p>
+                                <p class="text-2xl font-bold text-emerald-400">1</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-950 border border-slate-800 rounded-lg p-4 font-mono text-xs text-slate-300 overflow-x-auto whitespace-pre"><code>{
+  "status": "completed",
+  "detected_conflicts": 4,
+  "risk_summary": {
+    "high": 1,
+    "medium": 2,
+    "low": 1
+  },
+  "conflict_types": [
+    {
+      "type": "Skeleton Conflict",
+      "module_a": "XPMSSE.esp",
+      "module_b": "CombatAnimation.esp",
+      "risk": "High",
+      "suggestion": "建議調整 Load Order，並檢查骨架相容性模組。"
+    },
+    {
+      "type": "Script Override",
+      "module_a": "QuestFramework.esp",
+      "module_b": "CustomQuestPatch.esp",
+      "risk": "Medium",
+      "suggestion": "建議確認腳本覆寫順序。"
+    },
+    {
+      "type": "Dialogue Conflict",
+      "module_a": "SeranaDialogueAddon.esp",
+      "module_b": "NPCOverhaul.esp",
+      "risk": "Medium",
+      "suggestion": "建議檢查是否存在相容性修正檔。"
+    },
+    {
+      "type": "Asset Conflict",
+      "module_a": "TexturePackHD.esp",
+      "module_b": "ArmorRetexture.esp",
+      "risk": "Low",
+      "suggestion": "可依偏好選擇材質覆蓋順序。"
+    }
+  ],
+  "business_model": {
+    "free_plan": "每月 3 次基礎分析",
+    "premium_plan": "完整衝突報告與 Load Order 建議",
+    "pro_plan": "歷史紀錄、雲端備份、模組組合比較",
+    "b2b_service": "模組作者發布前相容性檢查"
+  }
+}</code></div>
+
+                        <div class="grid grid-cols-1 gap-4">
+                            <div class="bg-slate-950 p-4 rounded-lg border border-slate-800">
+                                <h4 class="text-white font-bold mb-2 flex items-center gap-2">
+                                    <i data-lucide="file-text" class="w-4 h-4 text-blue-400"></i>
+                                    報告輸出
+                                </h4>
+
+                                <p class="text-sm text-slate-400 leading-relaxed">
+                                    本系統輸出 Conflict_Report.pdf，不生成 AI 補丁，避免誤修改使用者模組環境。
+                                    報告內容包含衝突類型、風險等級、相關模組與建議處理方式。
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 flex justify-center">
+                            <button class="bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-3 rounded-full font-bold flex items-center space-x-2 transition shadow-[0_0_20px_rgba(16,185,129,0.4)]">
+                                <i data-lucide="download" class="w-5 h-5"></i>
+                                <span>下載 Conflict_Report.pdf</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    lucide.createIcons();
+
+    let timeLeft = 300;
+    let timerInterval = null;
+    let isRunning = false;
+
+    const timerDisplay = document.getElementById('timerDisplay');
+    const playPauseIcon = document.getElementById('playPauseIcon');
+    const timerIcon = document.getElementById('timerIcon');
+
+    function updateTimerDisplay() {
+        const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+        const s = (timeLeft % 60).toString().padStart(2, '0');
+
+        timerDisplay.innerText = `${m}:${s}`;
+
+        if (timeLeft < 60) {
+            timerDisplay.classList.remove('text-cyan-400');
+            timerDisplay.classList.add('text-red-500');
+
+            timerIcon.classList.remove('text-slate-400');
+            timerIcon.classList.add('text-red-500', 'animate-pulse');
+        } else {
+            timerDisplay.classList.remove('text-red-500');
+            timerDisplay.classList.add('text-cyan-400');
+
+            timerIcon.classList.remove('text-red-500', 'animate-pulse');
+            timerIcon.classList.add('text-slate-400');
+        }
+    }
+
+    function toggleTimer() {
+        if (isRunning) {
+            clearInterval(timerInterval);
+            playPauseIcon.setAttribute('data-lucide', 'play');
+        } else {
+            if (timeLeft <= 0) return;
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+
+                if (timeLeft <= 0) {
+                    toggleTimer();
+                }
+            }, 1000);
+
+            playPauseIcon.setAttribute('data-lucide', 'square');
+        }
+
         lucide.createIcons();
+        isRunning = !isRunning;
+    }
 
-        // ======= 計時器邏輯 =======
-        let timeLeft = 300; // 5分鐘
-        let timerInterval = null;
-        let isRunning = false;
-
-        const timerDisplay = document.getElementById('timerDisplay');
-        const playPauseIcon = document.getElementById('playPauseIcon');
-        const timerIcon = document.getElementById('timerIcon');
-
-        function updateTimerDisplay() {
-            const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
-            const s = (timeLeft % 60).toString().padStart(2, '0');
-            timerDisplay.innerText = `${m}:${s}`;
-            
-            if (timeLeft < 60) {
-                timerDisplay.classList.replace('text-cyan-400', 'text-red-500');
-                timerIcon.classList.replace('text-slate-400', 'text-red-500');
-                timerIcon.classList.add('animate-pulse');
-            } else {
-                timerDisplay.classList.replace('text-red-500', 'text-cyan-400');
-                timerIcon.classList.replace('text-red-500', 'text-slate-400');
-                timerIcon.classList.remove('animate-pulse');
-            }
+    function resetTimer(mins) {
+        if (isRunning) {
+            toggleTimer();
         }
 
-        function toggleTimer() {
-            if (isRunning) {
-                clearInterval(timerInterval);
-                playPauseIcon.setAttribute('data-lucide', 'play');
-            } else {
-                if (timeLeft <= 0) return;
-                timerInterval = setInterval(() => {
-                    timeLeft--;
-                    updateTimerDisplay();
-                    if (timeLeft <= 0) toggleTimer();
-                }, 1000);
-                playPauseIcon.setAttribute('data-lucide', 'square');
-            }
-            lucide.createIcons();
-            isRunning = !isRunning;
+        timeLeft = mins * 60;
+        updateTimerDisplay();
+
+        document.getElementById('btn5m').className =
+            mins === 5
+                ? 'text-xs px-2 py-1 rounded bg-cyan-900 text-cyan-100'
+                : 'text-xs px-2 py-1 rounded bg-slate-800 text-slate-400';
+
+        document.getElementById('btn10m').className =
+            mins === 10
+                ? 'text-xs px-2 py-1 rounded bg-cyan-900 text-cyan-100'
+                : 'text-xs px-2 py-1 rounded bg-slate-800 text-slate-400';
+    }
+
+    function switchTab(tab) {
+        const viewPitch = document.getElementById('viewPitch');
+        const viewDemo = document.getElementById('viewDemo');
+        const tabPitchBtn = document.getElementById('tabPitch');
+        const tabDemoBtn = document.getElementById('tabDemo');
+
+        if (tab === 'pitch') {
+            viewPitch.classList.remove('hidden-state');
+            viewDemo.classList.add('hidden-state');
+
+            tabPitchBtn.className =
+                'flex items-center space-x-3 w-full p-4 rounded-xl text-left transition-all duration-300 bg-gradient-to-r from-cyan-900/50 to-blue-900/50 border border-cyan-700/50 text-white';
+
+            tabDemoBtn.className =
+                'flex items-center space-x-3 w-full p-4 rounded-xl text-left transition-all duration-300 bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-slate-200';
+        } else {
+            viewPitch.classList.add('hidden-state');
+            viewDemo.classList.remove('hidden-state');
+
+            tabPitchBtn.className =
+                'flex items-center space-x-3 w-full p-4 rounded-xl text-left transition-all duration-300 bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-slate-200';
+
+            tabDemoBtn.className =
+                'flex items-center space-x-3 w-full p-4 rounded-xl text-left transition-all duration-300 bg-gradient-to-r from-emerald-900/50 to-cyan-900/50 border border-emerald-700/50 text-white';
         }
 
-        function resetTimer(mins) {
-            if (isRunning) toggleTimer();
-            timeLeft = mins * 60;
-            updateTimerDisplay();
-            
-            // 更新按鈕樣式
-            document.getElementById('btn5m').className = mins === 5 ? 'text-xs px-2 py-1 rounded bg-cyan-900 text-cyan-100' : 'text-xs px-2 py-1 rounded bg-slate-800 text-slate-400';
-            document.getElementById('btn10m').className = mins === 10 ? 'text-xs px-2 py-1 rounded bg-cyan-900 text-cyan-100' : 'text-xs px-2 py-1 rounded bg-slate-800 text-slate-400';
-        }
+        lucide.createIcons();
+    }
 
-        // ======= 分頁切換邏輯 =======
-        function switchTab(tab) {
-            const viewPitch = document.getElementById('viewPitch');
-            const viewDemo = document.getElementById('viewDemo');
-            const tabPitchBtn = document.getElementById('tabPitch');
-            const tabDemoBtn = document.getElementById('tabDemo');
+    function hideAllDemoStates() {
+        document.getElementById('demoStateIdle').classList.add('hidden-state');
+        document.getElementById('demoStateLoading').classList.add('hidden-state');
+        document.getElementById('demoStateResult').classList.add('hidden-state');
+    }
 
-            if (tab === 'pitch') {
-                viewPitch.classList.remove('hidden-state');
-                viewDemo.classList.add('hidden-state');
-                
-                tabPitchBtn.className = 'flex items-center space-x-3 w-full p-4 rounded-xl text-left transition-all duration-300 bg-gradient-to-r from-cyan-900/50 to-blue-900/50 border border-cyan-700/50 text-white shadow-[0_0_15px_rgba(34,211,238,0.1)]';
-                tabDemoBtn.className = 'flex items-center space-x-3 w-full p-4 rounded-xl text-left transition-all duration-300 bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-slate-200';
-            } else {
-                viewPitch.classList.add('hidden-state');
-                viewDemo.classList.remove('hidden-state');
-                
-                tabPitchBtn.className = 'flex items-center space-x-3 w-full p-4 rounded-xl text-left transition-all duration-300 bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-slate-200';
-                tabDemoBtn.className = 'flex items-center space-x-3 w-full p-4 rounded-xl text-left transition-all duration-300 bg-gradient-to-r from-emerald-900/50 to-teal-900/50 border border-emerald-700/50 text-white shadow-[0_0_15px_rgba(16,185,129,0.1)]';
-            }
-        }
+    function resetDemoState() {
+        hideAllDemoStates();
 
-        // ======= Demo 動畫邏輯 =======
-        const elIdle = document.getElementById('demoStateIdle');
-        const elLoading = document.getElementById('demoStateLoading');
-        const elConflict = document.getElementById('demoStateConflict');
-        const elSuccess = document.getElementById('demoStateSuccess');
-        
-        const loadingTitle = document.getElementById('loadingTitle');
+        document.getElementById('demoStateIdle').classList.remove('hidden-state');
+        document.getElementById('loadingBar').style.width = '0%';
+        document.getElementById('loadingText').innerText = 'Loading plugins.txt... 0%';
+        document.getElementById('loadingTitle').innerText = '正在讀取 Load Order...';
+
+        lucide.createIcons();
+    }
+
+    function startAnalysis() {
+        hideAllDemoStates();
+
+        const loadingState = document.getElementById('demoStateLoading');
         const loadingBar = document.getElementById('loadingBar');
+        const loadingTitle = document.getElementById('loadingTitle');
         const loadingText = document.getElementById('loadingText');
-        const loadingIcon = document.getElementById('loadingIcon');
 
-        function hideAllDemoStates() {
-            elIdle.classList.add('hidden-state');
-            elLoading.classList.add('hidden-state');
-            elConflict.classList.add('hidden-state');
-            elSuccess.classList.add('hidden-state');
-        }
+        loadingState.classList.remove('hidden-state');
 
-        function resetDemoState() {
-            hideAllDemoStates();
-            elIdle.classList.remove('hidden-state');
-        }
+        const stages = [
+            { 
+                percent: 25, 
+                title: '正在讀取 Load Order...', 
+                text: 'Parsing plugins.txt... 25%' 
+            },
+            { 
+                percent: 50, 
+                title: '正在比對模組資料庫...', 
+                text: 'Matching conflict database... 50%' 
+            },
+            { 
+                percent: 75, 
+                title: '正在偵測衝突模組類型...', 
+                text: 'Detecting Skeleton / Script / Dialogue / Asset conflicts... 75%' 
+            },
+            { 
+                percent: 100, 
+                title: '正在產生分析報告...', 
+                text: 'Generating Conflict_Report.pdf... 100%' 
+            }
+        ];
 
-        function startAnalysis() {
-            hideAllDemoStates();
-            elLoading.classList.remove('hidden-state');
-            
-            loadingTitle.innerText = '正在雲端沙盒建立靜態比對...';
-            loadingIcon.className = 'w-16 h-16 mx-auto text-cyan-400 animate-spin-slow lucide lucide-cpu';
-            loadingBar.className = 'h-3 rounded-full transition-all duration-300 ease-out bg-cyan-500';
-            
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += 20;
-                loadingBar.style.width = `${progress}%`;
-                loadingText.innerText = `Analyzing mesh dependencies... ${progress}%`;
-                
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        hideAllDemoStates();
-                        elConflict.classList.remove('hidden-state');
-                    }, 400);
-                }
-            }, 500);
-        }
+        let index = 0;
 
-        function startPatching() {
-            hideAllDemoStates();
-            elLoading.classList.remove('hidden-state');
-            
-            loadingTitle.innerText = '正在調用 OpenAI API 生成修復腳本...';
-            loadingIcon.className = 'w-16 h-16 mx-auto text-purple-400 animate-pulse lucide lucide-cpu';
-            loadingBar.className = 'h-3 rounded-full transition-all duration-300 ease-out bg-purple-500';
-            
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += 15;
-                if (progress > 100) progress = 100;
-                loadingBar.style.width = `${progress}%`;
-                loadingText.innerText = `Generating compatibility patch (JSON)... ${progress}%`;
-                
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        hideAllDemoStates();
-                        elSuccess.classList.remove('hidden-state');
-                    }, 500);
-                }
-            }, 600);
-        }
+        const interval = setInterval(() => {
+            const stage = stages[index];
 
-    </script>
+            loadingBar.style.width = stage.percent + '%';
+            loadingTitle.innerText = stage.title;
+            loadingText.innerText = stage.text;
+
+            index++;
+
+            if (index >= stages.length) {
+                clearInterval(interval);
+
+                setTimeout(() => {
+                    hideAllDemoStates();
+                    document.getElementById('demoStateResult').classList.remove('hidden-state');
+                    lucide.createIcons();
+                }, 700);
+            }
+        }, 700);
+    }
+</script>
+
 </body>
 </html>
